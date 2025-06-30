@@ -1,0 +1,198 @@
+<!-- templates/booking/booking_success.html -->
+{% extends 'base.html' %}
+
+{% block title %}Buyurtma muvaffaqiyatli yuborildi{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="text-center mb-5">
+                <div class="mb-4">
+                    <i class="fas fa-check-circle text-success success-icon" style="font-size: 6rem;"></i>
+                </div>
+                
+                <h1 class="display-4 text-success mb-4 fw-bold">Tabriklaymiz!</h1>
+                <p class="lead mb-4">Sizning buyurtmangiz muvaffaqiyatli qabul qilindi va tez orada ko'rib chiqiladi.</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-8">
+                    <div class="card shadow-lg">
+                        <div class="card-header bg-gradient text-white p-4" style="background: var(--gradient-main);">
+                            <h4 class="mb-0">
+                                <i class="fas fa-file-alt me-2"></i>Buyurtma tafsilotlari
+                            </h4>
+                        </div>
+                        
+                        <div class="card-body p-4">
+                            <div class="row g-4">
+                                <div class="col-sm-6">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="me-3">
+                                            <i class="fas fa-hashtag text-primary fa-2x"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-0">Buyurtma raqami</h6>
+                                            <p class="mb-0 fw-bold">#{{ booking.id }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-sm-6">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="me-3">
+                                            <i class="fas fa-clock text-primary fa-2x"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-0">Holati</h6>
+                                            <span class="badge bg-warning px-3 py-2">
+                                                <i class="fas fa-hourglass-half me-1"></i>{{ booking.get_status_display }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-sm-6">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="me-3">
+                                            <i class="fas fa-bed text-primary fa-2x"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-0">Xona</h6>
+                                            <p class="mb-0 fw-bold">{{ booking.room.name }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-sm-6">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="me-3">
+                                            <i class="fas fa-user text-primary fa-2x"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-0">Mijoz</h6>
+                                            <p class="mb-0 fw-bold">{{ booking.full_name }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-sm-6">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="me-3">
+                                            <i class="fas fa-calendar-plus text-primary fa-2x"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-0">Kelish sanasi</h6>
+                                            <p class="mb-0 fw-bold">{{ booking.check_in }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-sm-6">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="me-3">
+                                            <i class="fas fa-calendar-minus text-primary fa-2x"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-0">Ketish sanasi</h6>
+                                            <p class="mb-0 fw-bold">{{ booking.check_out }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-sm-6">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="me-3">
+                                            <i class="fas fa-users text-primary fa-2x"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-0">Mehmonlar soni</h6>
+                                            <p class="mb-0 fw-bold">{{ booking.guests }} kishi</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-sm-6">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="me-3">
+                                            <i class="fas fa-dollar-sign text-primary fa-2x"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-0">Umumiy narx</h6>
+                                            <p class="mb-0 price-highlight fs-4">${{ booking.total_price }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body p-4 text-center">
+                            <h5 class="card-title mb-3">
+                                <i class="fas fa-info-circle text-primary me-2"></i>Keyingi qadamlar
+                            </h5>
+                            <div class="text-start">
+                                <div class="mb-3">
+                                    <i class="fas fa-envelope text-success me-2"></i>
+                                    <small>Tasdiqlash emaili yuborildi</small>
+                                </div>
+                                <div class="mb-3">
+                                    <i class="fas fa-phone text-warning me-2"></i>
+                                    <small>24 soat ichida qo'ng'iroq qilamiz</small>
+                                </div>
+                                <div class="mb-3">
+                                    <i class="fas fa-check text-info me-2"></i>
+                                    <small>Admin buyurtmani tasdiqlaydi</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-body p-4 text-center">
+                            <h6 class="card-title mb-3">Savollaringiz bormi?</h6>
+                            <p class="text-muted mb-3 small">Biz bilan bog'laning</p>
+                            <div class="d-grid gap-2">
+                                <a href="tel:+998711234567" class="btn btn-outline-primary">
+                                    <i class="fas fa-phone me-2"></i>Qo'ng'iroq qilish
+                                </a>
+                                <a href="mailto:info@hotel.uz" class="btn btn-outline-primary">
+                                    <i class="fas fa-envelope me-2"></i>Email
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-5">
+                <div class="d-inline-flex gap-3">
+                    <a href="{% url 'home' %}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-home me-2"></i>Bosh sahifaga qaytish
+                    </a>
+                    <button onclick="window.print()" class="btn btn-outline-primary btn-lg">
+                        <i class="fas fa-print me-2"></i>Chop etish
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+@media print {
+    .btn, .navbar, .footer {
+        display: none !important;
+    }
+    
+    .card {
+        border: 1px solid #ddd !important;
+        box-shadow: none !important;
+    }
+}
+</style>
+{% endblock %}

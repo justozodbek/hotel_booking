@@ -1,0 +1,176 @@
+<!-- templates/booking/room_detail.html -->
+{% extends 'base.html' %}
+
+{% block title %}{{ room.name }} - Hotel Booking{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Bosh sahifa</a></li>
+            <li class="breadcrumb-item active">{{ room.name }}</li>
+        </ol>
+    </nav>
+
+    <div class="row g-5">
+        <div class="col-lg-8">
+            <div class="position-relative mb-4">
+                {% if room.image %}
+                    <img src="{{ room.image.url }}" class="img-fluid rounded-4 w-100" alt="{{ room.name }}" style="height: 500px; object-fit: cover;">
+                    <div class="position-absolute top-0 end-0 m-3">
+                        {% if room.is_available %}
+                            <span class="badge bg-success fs-6 px-3 py-2">
+                                <i class="fas fa-check me-2"></i>Mavjud
+                            </span>
+                        {% else %}
+                            <span class="badge bg-danger fs-6 px-3 py-2">
+                                <i class="fas fa-times me-2"></i>Band
+                            </span>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <div class="bg-gradient rounded-4 d-flex align-items-center justify-content-center" style="height: 500px; background: var(--gradient-main);">
+                        <i class="fas fa-bed text-white" style="font-size: 8rem; opacity: 0.7;"></i>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="mb-5">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <h1 class="display-5 fw-bold mb-2">{{ room.name }}</h1>
+                        <p class="lead text-muted mb-0">
+                            <i class="fas fa-tag me-2"></i>{{ room.get_room_type_display }}
+                        </p>
+                    </div>
+                    <div class="text-end">
+                        <div class="price-highlight mb-1">${{ room.price }}</div>
+                        <small class="text-muted">har kecha uchun</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-body p-4">
+                    <h4 class="card-title mb-3">
+                        <i class="fas fa-info-circle text-primary me-2"></i>Xona haqida
+                    </h4>
+                    <p class="card-text fs-5 lh-base">{{ room.description }}</p>
+                </div>
+            </div>
+
+            <!-- Room Features -->
+            <div class="card">
+                <div class="card-body p-4">
+                    <h4 class="card-title mb-4">
+                        <i class="fas fa-star text-primary me-2"></i>Xona imkoniyatlari
+                    </h4>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-wifi text-primary me-3"></i>
+                                <span>Bepul Wi-Fi</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-tv text-primary me-3"></i>
+                                <span>Smart TV</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-snowflake text-primary me-3"></i>
+                                <span>Konditsioner</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-bath text-primary me-3"></i>
+                                <span>Shaxsiy hammom</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-coffee text-primary me-3"></i>
+                                <span>Mini bar</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-concierge-bell text-primary me-3"></i>
+                                <span>Xona xizmati</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="sticky-top" style="top: 100px;">
+                <div class="card shadow-lg">
+                    <div class="card-body p-4">
+                        <h5 class="card-title mb-4">
+                            <i class="fas fa-calculator text-primary me-2"></i>Narx ma'lumoti
+                        </h5>
+                        
+                        <div class="text-center mb-4">
+                            <div class="price-highlight">${{ room.price }}</div>
+                            <small class="text-muted">har kecha uchun</small>
+                        </div>
+                        
+                        <hr class="my-4">
+                        
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <strong>Holati:</strong>
+                                {% if room.is_available %}
+                                    <span class="badge bg-success px-3 py-2">
+                                        <i class="fas fa-check me-1"></i>Mavjud
+                                    </span>
+                                {% else %}
+                                    <span class="badge bg-danger px-3 py-2">
+                                        <i class="fas fa-times me-1"></i>Band
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        {% if room.is_available %}
+                            <div class="d-grid gap-3">
+                                <a href="{% url 'book_room' room.id %}" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-calendar-check me-2"></i>Hoziroq band qilish
+                                </a>
+                                <a href="{% url 'home' %}" class="btn btn-outline-primary">
+                                    <i class="fas fa-arrow-left me-2"></i>Orqaga qaytish
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="d-grid gap-3">
+                                <button class="btn btn-secondary btn-lg" disabled>
+                                    <i class="fas fa-lock me-2"></i>Band qilingan
+                                </button>
+                                <a href="{% url 'home' %}" class="btn btn-outline-primary">
+                                    <i class="fas fa-arrow-left me-2"></i>Orqaga qaytish
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Contact Card -->
+                <div class="card mt-4">
+                    <div class="card-body p-4 text-center">
+                        <h6 class="card-title mb-3">Savollaringiz bormi?</h6>
+                        <p class="text-muted mb-3">Bizga qo'ng'iroq qiling</p>
+                        <a href="tel:+998711234567" class="btn btn-outline-primary">
+                            <i class="fas fa-phone me-2"></i>+998 71 123 45 67
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

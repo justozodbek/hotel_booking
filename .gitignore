@@ -1,0 +1,53 @@
+shuni ichiga qyogin
+# Исключаем SQLite базу данных
+db.sqlite3
+
+# Кэш Python
+__pycache__/
+*.py[cod]
+
+# Виртуальные окружения
+venv/
+.venv/
+
+# Настройки среды разработки
+.idea/
+.vscode/
+*.code-workspace
+
+# Файлы сессий
+*.session
+
+# Конфигурационные файлы среды
+.env
+*.env
+
+# Медиа-файлы
+/media/
+
+# Исключаем дамп базы данных PostgreSQL
+dump.sql
+
+# Исключаем файлы миграций, кроме init.py
+**/migrations/*
+!**/migrations/__init__.py
+
+# Логи и временные файлы
+logs/
+*.log
+*.out
+*.pid
+*.swp
+*.swo
+
+# Файлы статических сборок
+/staticfiles/
+/static/
+node_modules/
+
+# macOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+ehthumbs.db

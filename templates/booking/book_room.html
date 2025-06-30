@@ -1,0 +1,196 @@
+<!-- templates/booking/book_room.html -->
+{% extends 'base.html' %}
+
+{% block title %}{{ room.name }} - Band qilish{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Bosh sahifa</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'room_detail' room.id %}">{{ room.name }}</a></li>
+            <li class="breadcrumb-item active">Band qilish</li>
+        </ol>
+    </nav>
+
+    <div class="row g-5">
+        <div class="col-lg-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-gradient text-white p-4" style="background: var(--gradient-main);">
+                    <h3 class="mb-0">
+                        <i class="fas fa-calendar-plus me-2"></i>Xonani band qilish
+                    </h3>
+                    <p class="mb-0 opacity-75">{{ room.name }} xonasini band qilish uchun ma'lumotlaringizni kiriting</p>
+                </div>
+                
+                <div class="card-body p-4">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-4">
+                            <h5 class="mb-3">
+                                <i class="fas fa-user text-primary me-2"></i>Shaxsiy ma'lumotlar
+                            </h5>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-semibold">
+                                        <i class="fas fa-user me-1"></i>To'liq ism *
+                                    </label>
+                                    {{ form.full_name }}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-semibold">
+                                        <i class="fas fa-envelope me-1"></i>Email *
+                                    </label>
+                                    {{ form.email }}
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-semibold">
+                                        <i class="fas fa-phone me-1"></i>Telefon *
+                                    </label>
+                                    {{ form.phone }}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-semibold">
+                                        <i class="fas fa-users me-1"></i>Mehmonlar soni *
+                                    </label>
+                                    {{ form.guests }}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <hr class="my-4">
+                        
+                        <div class="mb-4">
+                            <h5 class="mb-3">
+                                <i class="fas fa-calendar text-primary me-2"></i>Sana ma'lumotlari
+                            </h5>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-semibold">
+                                        <i class="fas fa-calendar-plus me-1"></i>Kelish sanasi *
+                                    </label>
+                                    {{ form.check_in }}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-semibold">
+                                        <i class="fas fa-calendar-minus me-1"></i>Ketish sanasi *
+                                    </label>
+                                    {{ form.check_out }}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <hr class="my-4">
+                        
+                        <div class="mb-4">
+                            <h5 class="mb-3">
+                                <i class="fas fa-comment text-primary me-2"></i>Qo'shimcha ma'lumotlar
+                            </h5>
+                            
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">
+                                    <i class="fas fa-star me-1"></i>Maxsus talablar
+                                </label>
+                                {{ form.special_requests }}
+                                <div class="form-text">Maxsus talablaringizni yozing (ixtiyoriy)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg py-3">
+                                <i class="fas fa-paper-plane me-2"></i>Buyurtma berish
+                            </button>
+                            <a href="{% url 'room_detail' room.id %}" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Orqaga qaytish
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="sticky-top" style="top: 100px;">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-light p-4">
+                        <h5 class="mb-0">
+                            <i class="fas fa-receipt text-primary me-2"></i>Buyurtma xulosasi
+                        </h5>
+                    </div>
+                    
+                    <div class="card-body p-4">
+                        {% if room.image %}
+                            <img src="{{ room.image.url }}" class="img-fluid rounded mb-3 w-100" alt="{{ room.name }}" style="height: 200px; object-fit: cover;">
+                        {% else %}
+                            <div class="bg-gradient rounded mb-3 d-flex align-items-center justify-content-center" style="height: 200px; background: var(--gradient-main);">
+                                <i class="fas fa-bed text-white fa-3x opacity-75"></i>
+                            </div>
+                        {% endif %}
+                        
+                        <h6 class="fw-bold">{{ room.name }}</h6>
+                        <p class="text-muted mb-3">
+                            <i class="fas fa-tag me-1"></i>{{ room.get_room_type_display }}
+                        </p>
+                        
+                        <hr class="my-3">
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="fw-semibold">Kunlik narx:</span>
+                            <span class="price-highlight fs-4">${{ room.price }}</span>
+                        </div>
+                        
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <small>Umumiy narx sanalarga qarab hisoblanadi</small>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <h6 class="mb-3">Xona imkoniyatlari:</h6>
+                            <div class="row text-sm">
+                                <div class="col-6 mb-2">
+                                    <i class="fas fa-wifi text-primary me-1"></i>
+                                    <small>Wi-Fi</small>
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <i class="fas fa-tv text-primary me-1"></i>
+                                    <small>TV</small>
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <i class="fas fa-snowflake text-primary me-1"></i>
+                                    <small>AC</small>
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <i class="fas fa-bath text-primary me-1"></i>
+                                    <small>Hammom</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Help Card -->
+                <div class="card mt-4">
+                    <div class="card-body p-4 text-center">
+                        <h6 class="card-title mb-3">Yordam kerakmi?</h6>
+                        <p class="text-muted mb-3 small">Savollaringiz bo'lsa, biz bilan bog'laning</p>
+                        <div class="d-grid gap-2">
+                            <a href="tel:+998711234567" class="btn btn-outline-primary btn-sm">
+                                <i class="fas fa-phone me-1"></i>Qo'ng'iroq qilish
+                            </a>
+                            <a href="mailto:info@hotel.uz" class="btn btn-outline-primary btn-sm">
+                                <i class="fas fa-envelope me-1"></i>Email yuborish
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

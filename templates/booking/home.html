@@ -1,0 +1,204 @@
+<!-- templates/booking/home.html -->
+{% extends 'base.html' %}
+
+{% block title %}Bosh sahifa - Hotel Booking{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section parallax-container">
+    <div class="hero-content">
+        <div class="container text-center">
+            <h1 class="display-3 mb-4 fw-bold" style="animation: fadeInUp 1s ease-out;">
+                Eng Yaxshi Mehmonxona Xonalari
+            </h1>
+            <p class="lead mb-5 fs-4" style="animation: fadeInUp 1s ease-out 0.2s both;">
+                Qulay narxlarda sifatli xizmat va shinam xonalar
+            </p>
+            <div style="animation: fadeInUp 1s ease-out 0.4s both;">
+                <a href="#rooms" class="btn btn-primary btn-lg me-3">
+                    <i class="fas fa-search me-2"></i> Xonalarni ko'rish
+                </a>
+                <a href="#contact" class="btn btn-outline-light btn-lg">
+                    <i class="fas fa-phone me-2"></i> Bog'lanish
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-wifi text-primary" style="font-size: 3rem;"></i>
+                        </div>
+                        <h5>Bepul Wi-Fi</h5>
+                        <p class="text-muted">Barcha xonalarda tez internet</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-car text-primary" style="font-size: 3rem;"></i>
+                        </div>
+                        <h5>Bepul Parking</h5>
+                        <p class="text-muted">Xavfsiz va qulay parking</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-utensils text-primary" style="font-size: 3rem;"></i>
+                        </div>
+                        <h5>Restoran</h5>
+                        <p class="text-muted">Milliy va jahon oshxonasi</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Rooms Section -->
+<section id="rooms" class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="section-title display-5 fw-bold">Mavjud Xonalar</h2>
+                <p class="lead text-muted">Eng yaxshi xonalarni tanlang va unutilmas dam oling</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            {% for room in rooms %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card room-card h-100">
+                    {% if room.image %}
+                        <div class="position-relative overflow-hidden" style="height: 280px;">
+                            <img src="{{ room.image.url }}" class="card-img-top h-100 w-100" alt="{{ room.name }}" style="object-fit: cover; transition: transform 0.3s ease;">
+                            <div class="position-absolute top-0 end-0 m-3">
+                                {% if room.is_available %}
+                                    <span class="badge bg-success">
+                                        <i class="fas fa-check me-1"></i>Mavjud
+                                    </span>
+                                {% else %}
+                                    <span class="badge bg-danger">
+                                        <i class="fas fa-times me-1"></i>Band
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="card-img-top bg-gradient d-flex align-items-center justify-content-center" style="height: 280px; background: var(--gradient-main);">
+                            <i class="fas fa-bed text-white fa-4x opacity-75"></i>
+                        </div>
+                    {% endif %}
+                    
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="card-title fw-bold">{{ room.name }}</h5>
+                            <span class="price-highlight">${{ room.price }}</span>
+                        </div>
+                        
+                        <p class="text-muted mb-2">
+                            <i class="fas fa-tag me-2"></i>{{ room.get_room_type_display }}
+                        </p>
+                        
+                        <p class="card-text flex-grow-1 text-muted">
+                            {{ room.description|truncatewords:15 }}
+                        </p>
+                        
+                        <div class="mt-auto">
+                            <div class="d-flex gap-2">
+                                <a href="{% url 'room_detail' room.id %}" class="btn btn-outline-primary flex-fill">
+                                    <i class="fas fa-info-circle me-1"></i> Batafsil
+                                </a>
+                                {% if room.is_available %}
+                                    <a href="{% url 'book_room' room.id %}" class="btn btn-primary flex-fill">
+                                        <i class="fas fa-calendar-plus me-1"></i> Band qilish
+                                    </a>
+                                {% else %}
+                                    <button class="btn btn-secondary flex-fill" disabled>
+                                        <i class="fas fa-lock me-1"></i> Band
+                                    </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-5">
+                <i class="fas fa-bed text-muted mb-3" style="font-size: 4rem;"></i>
+                <h4 class="text-muted">Hozircha xonalar mavjud emas</h4>
+                <p class="text-muted">Tez orada yangi xonalar qo'shiladi</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h3 class="fw-bold mb-4">Bizga murojaat qiling</h3>
+                <div class="row">
+                    <div class="col-sm-6 mb-3">
+                        <div class="d-flex align-items-center">
+                            <div class="me-3">
+                                <i class="fas fa-phone text-primary fa-2x"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">Telefon</h6>
+                                <p class="text-muted mb-0">+998 71 123 45 67</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 mb-3">
+                        <div class="d-flex align-items-center">
+                            <div class="me-3">
+                                <i class="fas fa-envelope text-primary fa-2x"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">Email</h6>
+                                <p class="text-muted mb-0">info@hotel.uz</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Tezkor bog'lanish</h5>
+                        <form>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Ismingiz">
+                            </div>
+                            <div class="mb-3">
+                                <input type="email" class="form-control" placeholder="Email">
+                            </div>
+                            <div class="mb-3">
+                                <textarea class="form-control" rows="3" placeholder="Xabar"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="fas fa-paper-plane me-2"></i>Yuborish
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
